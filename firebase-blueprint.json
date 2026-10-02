@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "Expense": {
+      "title": "Expense",
+      "description": "User expense data",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "currency": { "type": "string", "enum": ["IQD", "USD"] },
+        "note": { "type": "string" },
+        "type": { "type": "string", "enum": ["fixed", "variable"] },
+        "status": { "type": "string", "enum": ["paid", "partially_paid", "unpaid"] },
+        "paidAmount": { "type": "number" },
+        "userId": { "type": "string" },
+        "localId": { "type": "number" }
+      },
+      "required": ["amount", "category", "date", "currency", "type", "status", "userId"]
+    },
+    "Sula": {
+      "title": "Sula/Loan",
+      "description": "User sula or loan data",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "monthlyInstallment": { "type": "number" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "myTurn": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed"] },
+        "paidMonths": { "type": "number" },
+        "type": { "type": "string", "enum": ["sula", "loan"] },
+        "userId": { "type": "string" },
+        "localId": { "type": "number" }
+      },
+      "required": ["name", "totalAmount", "monthlyInstallment", "status", "userId"]
+    },
+    "Debt": {
+      "title": "Debt",
+      "description": "User debts (owe/owed)",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["owe", "owed"] },
+        "personName": { "type": "string" },
+        "amount": { "type": "number" },
+        "remainingAmount": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" },
+        "localId": { "type": "number" }
+      },
+      "required": ["type", "personName", "amount", "remainingAmount", "createdAt", "userId"]
+    },
+    "UserSetting": {
+      "title": "User Setting",
+      "description": "Application settings for the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "value": { "type": "object" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "value", "userId"]
+    },
+    "Income": {
+      "title": "Income",
+      "description": "User income data",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "currency": { "type": "string", "enum": ["IQD", "USD"] },
+        "note": { "type": "string" },
+        "userId": { "type": "string" },
+        "localId": { "type": "number" }
+      },
+      "required": ["amount", "category", "date", "currency", "userId"]
+    }
+  },
+  "firestore": {
+    "users/{userId}/incomes": {
+      "schema": "Income",
+      "description": "Collection of user incomes"
+    },
+    "users/{userId}/expenses": {
+      "schema": "Expense",
+      "description": "Collection of user expenses"
+    },
+    "users/{userId}/sulas": {
+      "schema": "Sula",
+      "description": "Collection of user sulas and loans"
+    },
+    "users/{userId}/debts": {
+      "schema": "Debt",
+      "description": "Collection of user debts"
+    },
+    "users/{userId}/settings": {
+      "schema": "UserSetting",
+      "description": "Collection of user-specific settings"
+    }
+  }
+}
